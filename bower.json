@@ -1,0 +1,35 @@
+{
+  "name": "cachemodule",
+  "version": "1.0.0",
+  "description": "Cache module to extend angular functionallity",
+  "main": "src/angular-cache.js",
+  "authors": [
+    "]C4rM4X["
+  ],
+  "license": "ISC",
+  "keywords": [
+    "cache",
+    "invalidator",
+    "interceptor",
+    "max-age"
+  ],
+  "homepage": "https://github.com/c4rm4x/C4rm4x.Cache.Component",
+  "moduleType": [
+    "globals"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.3",
+    "angular-route": "^1.5.3",
+    "ngstorage": "^0.3.10"
+  },
+  "devDependencies": {
+    "angular-mocks": "^1.5.3"
+  }
+}

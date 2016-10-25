@@ -1,0 +1,37 @@
+{
+  "name": "cachemodule",
+  "version": "1.0.0",
+  "description": "Cache module to extend angular functionallity",
+  "main": "src/angular-cache.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/c4rm4x/C4rm4x.Cache.Component.git"
+  },
+  "keywords": [
+    "cache",
+    "invalidator",
+    "interceptor",
+    "max-age"
+  ],
+  "author": "]C4rM4X[",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/c4rm4x/C4rm4x.Cache.Component/issues"
+  },
+  "homepage": "https://github.com/c4rm4x/C4rm4x.Cache.Component#readme",
+  "dependencies": {
+    "bower": "^1.7.9",
+    "grunt-cli": "^1.2.0"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-concat": "^1.0.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-jasmine": "^1.0.0",
+    "grunt-contrib-uglify": "^1.0.1",
+    "grunt-contrib-watch": "^1.0.0"
+  }
+}

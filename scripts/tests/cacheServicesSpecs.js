@@ -91,7 +91,7 @@ describe('Cache services', function() {
 
 	describe('cacheManager', function() {
 		var service, cacheStorage, cacheConfig,
-			baseApiUrl = 'http://localhost:8080/api/resources';
+			baseApiUrl = { url: 'http://localhost:8080/api/resources' };
 
 		beforeEach(inject(function(cacheManager, _cacheStorage_, _cacheConfig_) {
 			service = cacheManager;
@@ -256,7 +256,7 @@ describe('Cache services', function() {
 						cacheStorage.getCache.and.returnValue({
 							'http://localhost:8080/api/resources': 100
 						});
-						service.invalidateCache('POST', baseApiUrl);
+						service.invalidateCache('POST', matchingUrl);
 					});
 
 					it('should invoke getCache from cacheStorage', function() {				
@@ -268,7 +268,7 @@ describe('Cache services', function() {
 					});
 
 					it('should invoke setCache from cacheStorage with the new status which increments the revision of the baseApiUrl', function() {						
-						expect(cacheStorage.setCache.calls.mostRecent().args[0][baseApiUrl]).toBe(101);
+						expect(cacheStorage.setCache.calls.mostRecent().args[0][baseApiUrl.url]).toBe(101);
 					});
 				});
 
@@ -293,7 +293,7 @@ describe('Cache services', function() {
 					});
 
 					it('should invoke setCache from cacheStorage with the new status which increments the revision of the baseApiUrl', function() {
-						expect(cacheStorage.setCache.calls.mostRecent().args[0][baseApiUrl]).toBe(101);
+						expect(cacheStorage.setCache.calls.mostRecent().args[0][baseApiUrl.url]).toBe(101);
 					});
 
 					it('should invoke setCache from cacheStorage with the new status which increments the revision of the resource', function() {
@@ -332,7 +332,7 @@ describe('Cache services', function() {
 					});
 
 					it('should invoke setCache from cacheStorage with the new status which increments the revision of the baseApiUrl', function() {
-						expect(cacheStorage.setCache.calls.mostRecent().args[0][baseApiUrl]).toBe(101);
+						expect(cacheStorage.setCache.calls.mostRecent().args[0][baseApiUrl.url]).toBe(101);
 					});
 
 					it('should invoke setCache from cacheStorage with the new status which increments the revision of the resource', function() {
@@ -374,7 +374,7 @@ describe('Cache services', function() {
 			});
 
 			it('should invoke setCache from cacheStorage with the new status which does not increment the revision of baseApiUrl', function() {
-				expect(cacheStorage.setCache.calls.mostRecent().args[0][baseApiUrl]).toBe(100);
+				expect(cacheStorage.setCache.calls.mostRecent().args[0][baseApiUrl.url]).toBe(100);
 			});
 
 			it('should invoke setCache from cacheStorage with the new status which does not increment the revision of url', function() {

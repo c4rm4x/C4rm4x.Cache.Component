@@ -39,13 +39,17 @@ cacheServices.service('cacheStorage', ['$sessionStorage',
 cacheServices.service('cacheManager', ['cacheConfig', 'cacheStorage', 
 	function(Config, Storage) {
 
-	function isBaseApiUrl(url) {
+	function isBaseApiUrl(url, strict) {
 		var matchingUrls = Config.getConfiguration().baseApiUrls
 			.filter(function(baseApiUrl) {
-				return url.indexOf(baseApiUrl) >= 0;
+				if (strict && baseApiUrl.strict) {
+					return url === baseApiUrl.url;
+				} else {
+					return url.indexOf(baseApiUrl.url) >= 0;
+				}
 			});		
 
-		if (matchingUrls && matchingUrls.length > 0) return matchingUrls[0];
+		if (matchingUrls && matchingUrls.length > 0) return matchingUrls[0].url;
 	}
 
 	function initRevision(cache, key) {
@@ -78,7 +82,7 @@ cacheServices.service('cacheManager', ['cacheConfig', 'cacheStorage',
 	this.getActualUrl = function(url) {
 		var rev, cache;
 
-		if (!isBaseApiUrl(url)) 
+		if (!isBaseApiUrl(url, true)) 
 			return url; // nothing to do, and return the original url
 
 		cache = Storage.getCache();
@@ -125,10 +129,14 @@ cacheServices.service('cacheManager', ['cacheConfig', 'cacheStorage',
 cacheServices.service('cacheRequestInterceptor', ['$cacheFactory', 'cacheManager',
 	function($cacheFactory, Manager) {
 
+	function isHtml(url) {
+		return url.indexOf('.html') >= 0;
+	}
+
 	var cache = $cacheFactory('customCache');
 
 	this.request = function(config) {
-		if (config.method === 'GET') {			
+		if (config.method === 'GET' && !isHtml(config.url)) {			
 			config.cache = cache;
 			config.url = Manager.getActualUrl(config.url);
 		}			
@@ -141,7 +149,7 @@ cacheServices.service('cacheRequestInterceptor', ['$cacheFactory', 'cacheManager
 			response.config.method === 'PUT' || 
 			response.config.method === 'DELETE') {
 			Manager.invalidateCache(response.config.method, response.config.url);
-		} else if (response.config.method === 'GET') {
+		} else if (response.config.method === 'GET' && !isHtml(response.config.url)) {
 			cache.remove(response.config.url);
 		}			
 
